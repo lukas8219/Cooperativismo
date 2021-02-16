@@ -1,10 +1,5 @@
 # Desafio BackEnd - South System - Java Junior
 
-
-## Introdução ao Projeto
-
-doizsjfasojfja
-
 ## Tecnologias
 
 ### Framework = SpringBoot com SpringCloud, Eureka Server Netflix. - para trabalhar com Microserviços
@@ -26,7 +21,7 @@ doizsjfasojfja
 ### New Agenda Service 
 
 Este serviço tem conexão direta com o Banco de Dados para criação de novas pautas, e consultas de resultados.
-** Endpoints:
+**Endpoints**
 * POST : /open/ : que recebe um objeto Agenda, ou um Json contendo os campos "name" e "description". O mesmo gera seu UUID automaticamente. Retorna o objeto gerado.
 * GET : / : retorna uma lista de todas pautas do banco de Dados. Utilizado para Debug.
 * GET: /check/{agendaId} : retorna um objeto Result. que contém os campos "agenda" e "result". Result contém Approved, Refused ou Tied, como String.
@@ -35,14 +30,14 @@ Este serviço tem conexão direta com o Banco de Dados para criação de novas p
 
 Este serviço contém conexão com o Banco de Dados para atualização do mesmo.
 
-** Endpoints:
+**Endpoints**
 * PUT: /?id="agendaID"&time="" : Abre uma votação na pauta do ID determinado. a Key "Time" é opcional. (Em caso de não especificada, padrão 1 minuto). Este endpoint vai chamar exceções específicas em caso de Votação já Aberta, ou ID de Pauta invalido.
 
 ### Vote Service
 
 Este serviço contém conexão com o Banco de Dados para atualização da Pauta.
 
-** Endpoint
+**Endpoints**
 * POST : /?agenda="agendaId"?cpf="cpf"?decision="yes/no" : Contabiliza um voto. Este endpoint vai chamar as exceções específicas em caso de CPF Invalido, CPF duplicado, Votação Expirada, ID da Pauta inválido ou Pauta sem votação aberta.
 
 
@@ -50,7 +45,7 @@ Este serviço contém conexão com o Banco de Dados para atualização da Pauta.
 
 O cliente não tem conexão com o Banco de Dados.
 
-** Endpoints
+**Endpoints**
 
 * POST : /new/ : Conexão com /open/ de New Agenda Service
 * GET : /result/{id} : Conexão com /check/{id} de New Agenda Service
@@ -69,16 +64,23 @@ Criei uma biblioteca generalista para conseguir facilitar a deserialização/ser
 
 ### Testes Unitários
 
-O serviço Cliente contém 5 testes:
-* DefaultTest = Teste em condições normais, cria uma pauta, abre a pauta, vota(até o cpf ser validado pelo site) com 3 cpfs em YES, espera 1 minuto(visto que o tempo que não fora especificado) e testar caso a pauta tenha sido aprovada.
+O serviço Cliente contém 1 teste que chama outros 4 testes, na ordem cronológica dos possiveis erros:
+* DefaultTest =  Este teste cria uma nova pauta, abre a mesma. E então chama "Already Open". Seguindo, ela abre uma votação, (insiste até conseguir validar o CPF) e então chama "Duplicate CPF". Após este teste, o mesmo chama "Votation Occuring".(pois ainda está dentro do 1 minuto padrão). Após, espera 60 segundos para votação terminar, e testa se a pauta foi aprovada.(3 votos em YES). Para finalizar, chama Votation Expired.
 
-* DuplicateCPF : Testa caso exista algum CPF duplicado. Utiliza um ID existente no meu Banco de Dados local (**necessita ser atualizada em outros computadores**) e compara com CPF que já foi votado. **presente também no banco de dados**
+* DuplicateCPF : Testa caso exista algum CPF duplicado.
 
-* VotationExpired : Testa um tentativa de voto em votação expirada. utiliza um ID existente no Banco de Dados local cujo ja tenha expirado.
+* VotationExpired : Testa um tentativa de voto em votação expirada.
 
-* VotationOccuring : Testa consultar resultado em votação que está acontecendo. 
+* VotationOccuring : Testa consultar resultado em votação que está acontecendo.
+
+* Already Open : Teste se consegue abrir a pauta, mesmo que ela já tenha sido aberta.
 
 ### Documentação
 
 Nas pastas dos microserviços, contém os respectivos JavaDoc
 
+### Tarefas Bônus utilizadas:
+
+Selecionei apenas a Tarefa Bônus 1 de Integração com Sistemas Externos. O Código está na classe em VoteService/src/main/java/AgendaVote/voteservice/models/CPF.java
+
+# Obrigado South System 
