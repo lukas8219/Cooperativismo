@@ -75,9 +75,9 @@ O serviço Cliente contém 1 teste que chama outros 4 testes, na ordem cronológ
 
 * Already Open : Teste se consegue abrir a pauta, mesmo que ela já tenha sido aberta.
 
-### Documentação
+### Documentação Interna
 
-Nas pastas dos microserviços, contém os respectivos JavaDoc
+Alguns microserviços contém JavaDoc.
 
 ### Tarefas Bônus utilizadas:
 
