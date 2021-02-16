@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"AgendaVote.newagendaservice.controllers","l":"AgendaController"},{"l":"All Classes","u":"allclasses-index.html"}];updateSearchResults();

@@ -33,6 +33,7 @@ public class AgendaController{
 	/**
 	 * Mapping to publish new Agenda
 	 * @param newAgenda - JSON Object containing fields name, description.
+	 * @return Agenda Object
 	 */
 	@PostMapping("/open/")
 	public Agenda publishNewAgenda(@RequestBody Agenda newAgenda) {

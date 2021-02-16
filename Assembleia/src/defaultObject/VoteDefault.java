@@ -12,9 +12,18 @@ public class VoteDefault implements VoteInterface {
 	private String vote;
 	private Date voteDate;
 	
+	/**
+	 * Default construct to deserialize/instantiate
+	 */
 	public VoteDefault() {
 	}
 	
+	/**
+	 * Go-To Constructor.
+	 * initializes all variables.
+	 * @param cpf - Voter registry
+	 * @param vote - Decision YES/NO - non case-sensitive
+	 */
 	public VoteDefault(String cpf, String vote) {
 		this.id = UUID.randomUUID();
 		this.cpf = cpf;

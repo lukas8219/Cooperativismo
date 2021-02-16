@@ -17,13 +17,17 @@ public class Result implements ResultInterface{
 	
 	
 	/**
+	 * Default construct to deserialize/instantiate.
+	 */
+	public Result() {
+	}
+	
+	
+	/**
 	 * Construct a Result Object containing fields Agenda and Result
 	 * @param agenda - a Agenda Interface/implemented Object
 	 * @param result - YES or NO String - non-case-sensitive
 	 */
-	
-	public Result() {
-	}
 	
 	public Result(AgendaInterface agenda, String result) {
 		this.result = result;

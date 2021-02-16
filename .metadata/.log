@@ -1883,3 +1883,45 @@ java.lang.InterruptedException
 	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
 	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
 	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-02-16 15:43:21.121
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-02-16 15:43:21.131
+!MESSAGE classpath=122 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-02-16 15:43:21.138
+!MESSAGE buffering callback sts4.classpath.nHtWAZXp new-agenda-service false 122
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-02-16 15:43:21.139
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-02-16 15:43:21.148
+!MESSAGE classpath=122 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-02-16 15:43:21.156
+!MESSAGE buffering callback sts4.classpath.nHtWAZXp open-votation-service false 122
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-02-16 15:43:21.157
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-02-16 15:43:21.166
+!MESSAGE classpath=122 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-02-16 15:43:21.174
+!MESSAGE buffering callback sts4.classpath.nHtWAZXp vote-service false 122
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-02-16 15:43:21.175
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-02-16 15:43:21.183
+!MESSAGE classpath=115 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-02-16 15:43:21.190
+!MESSAGE buffering callback sts4.classpath.nHtWAZXp angedavote-client false 115
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-02-16 15:43:21.191
+!MESSAGE executing callback sts4.classpath.nHtWAZXp 4 batched events
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-02-16 15:43:21.218
+!MESSAGE executing callback sts4.classpath.nHtWAZXp SUCCESS [done]

@@ -1,4 +1,4 @@
-package AgendaVote.newagendaservice;
+package AgendaVote.angedavoteclient;
 
 import static org.junit.jupiter.api.Assertions.*;
 
