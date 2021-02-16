@@ -16,21 +16,23 @@ import defaultObject.AgendaDefault;
 class ClientTest {
 	
 	String host = "http://localhost:8080";
-	String[] examples = {"novo presidente","novo comissario","tesoureiro"};
+	String example = "tesoureiro";
 	String[] cpf = {"02010181018", "51315561042","38770553033"};
-	String expiredAgenda = "906c239e-57ca-4b35-a8ee-91c308751330";
-	String duplicate = "a79c66b3-8fa0-45c6-9db1-1f0bcf75d68a"; // 51315561042 duplicate
-	String duplicateCPF = "51315561042";
 	RestTemplate rest = new RestTemplate();
+	UUID id;
 	
 	@Test
 	void DefaultTest() throws InterruptedException {
 			
-			AgendaDefault currentAgenda = new AgendaDefault(examples[0],examples[0]);
+			AgendaDefault currentAgenda = new AgendaDefault(example,example);
 			currentAgenda = rest.postForObject(host+"/new/", currentAgenda, AgendaDefault.class);
-			UUID id = currentAgenda.getId();
+			id = currentAgenda.getId();
 			
 			rest.put(host+"/open/?agenda="+id, null); //openVotation
+			
+			System.out.println("Tentando abrir 2 vezes");
+			
+			AlreadyOpenTest(id);
 			
 			for(int k = 0; k<cpf.length;k++) { //Vote
 				while(true) { //repeat until the CPF can vote.
@@ -47,20 +49,26 @@ class ClientTest {
 				}
 			}
 			
-			System.out.println("Esperando um minuto até pegar Resultado.");
+			System.out.println("Tentando votar com o mesmo CPF");
+			DuplicateCPF(cpf[0], id);
+			
+			System.out.println("Tentando pegar resultado com votação em Andamento!");
+			VotationOccuring(id);
+			
+			System.out.println("Esperando resultado...");
 			Thread.sleep(60000);
-			
 			JsonNode result = rest.getForObject(host+"/result/"+id, JsonNode.class);
-			
 			assertEquals("Approved" , result.get("result").asText());
+			
+			System.out.println("Tentando votar depois de expirado! ");
+			VotationExpired(id);
 			
 	}
 	
-	@Test
-	void DuplicateCPF() throws InterruptedException {
+	void DuplicateCPF(String duplicateCPF, UUID id) throws InterruptedException {
 				while(true) { //repeat until the CPF can vote.
 					try {
-						boolean voted = rest.postForObject(host+"/vote/?agendaId="+duplicate+
+						boolean voted = rest.postForObject(host+"/vote/?agendaId="+id+
 								"&cpf="+duplicateCPF+"&vote=yes", null, Boolean.class);
 						if(voted == true) fail();
 					} catch (Exception e) {
@@ -72,8 +80,7 @@ class ClientTest {
 				}
 			}
 			
-	@Test
-	void VotationExpired() throws InterruptedException {
+	void VotationExpired(UUID expiredAgenda) throws InterruptedException {
 			
 			while(true) { //repeat until the CPF can vote.
 					try {
@@ -92,33 +99,7 @@ class ClientTest {
 				}
 	}
 	
-	@Test
-	void VotationOccuring() throws InterruptedException {
-			
-			AgendaDefault currentAgenda = new AgendaDefault(examples[0],examples[0]);
-			currentAgenda = rest.postForObject(host+"/new/", currentAgenda, AgendaDefault.class);
-			UUID id = currentAgenda.getId();
-			
-			rest.put(host+"/open/?agenda="+id, null); //openVotation
-			
-			for(int k = 0; k<cpf.length;k++) { //Vote
-				while(true) { //repeat until the CPF can vote.
-					try {
-						boolean voted = rest.postForObject(host+"/vote/?agendaId="+id+
-								"&cpf="+cpf[k]+"&vote=yes", null, Boolean.class);
-						if(voted == true) { 
-							System.out.println("Cpf validado"); 
-							break;
-						}
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-					}
-				}
-			}
-			
-			System.out.println("Esperando um minuto até pegar Resultado.");
-			Thread.sleep(10000);
-			
+	void VotationOccuring(UUID id) throws InterruptedException {
 			try {
 				JsonNode result = rest.getForObject(host+"/result/"+id, JsonNode.class);
 			} catch (Exception e) {
@@ -129,11 +110,10 @@ class ClientTest {
 			
 	}
 	
-	@Test
-	void AlreadyOpenTest() throws InterruptedException {
+	void AlreadyOpenTest(UUID id) throws InterruptedException {
 			
 			try {
-				rest.put(host+"/open/?agenda="+expiredAgenda, null); //openVotation
+				rest.put(host+"/open/?agenda="+id, null); //openVotation
 			} catch (Exception e) {
 				if(e.getMessage().contains("Votation already open for")) {
 					assertTrue(true);
