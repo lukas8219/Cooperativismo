@@ -29,6 +29,11 @@ public class Agenda implements AgendaInterface {
 	public Agenda() {
 	}
 	
+	/**
+	 * Constructor that initializes all parameters.
+	 * @param name Agenda Name
+	 * @param description Agenda Description
+	 */
 	public Agenda(String name, String description) {
 		this.id = UUID.randomUUID();
 		this.name = name;
@@ -81,13 +86,21 @@ public class Agenda implements AgendaInterface {
 		this.voters = voters;
 	}
 
+	
+	/**
+	 * Open the voting.
+	 * Sets a new Date Object with a posterior expiration date
+	 * @param minutes how distant from current time the Date object will be instantiated
+	 */
 	@Override
 	public void openVote(int minutes) {
-		long time = System.currentTimeMillis() + (minutes*60*1000);
-		this.votationExpirationDate = new Date(time);
+		int minuteUnit = 60*1000;
+		long expirationDate = System.currentTimeMillis() + (minutes*minuteUnit);
+		this.votationExpirationDate = new Date(expirationDate);
 	}
 
 	@Override
 	public void vote(VoteInterface arg0) {
+		//not used.
 	}
 }

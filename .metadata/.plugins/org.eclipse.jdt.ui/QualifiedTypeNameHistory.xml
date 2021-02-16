@@ -29,7 +29,6 @@
     <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
     <fullyQualifiedTypeName name="defaultObject.utility.Result"/>
     <fullyQualifiedTypeName name="interfaces.AgendaInterface"/>
-    <fullyQualifiedTypeName name="java.util.UUID"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
     <fullyQualifiedTypeName name="java.util.Optional"/>
     <fullyQualifiedTypeName name="java.io.IOException"/>
@@ -41,4 +40,11 @@
     <fullyQualifiedTypeName name="AgendaVote.voteservice.models.CPF"/>
     <fullyQualifiedTypeName name="defaultObject.utility.MessageJson"/>
     <fullyQualifiedTypeName name="interfaces.MessageInterface"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseStatus"/>
+    <fullyQualifiedTypeName name="AgendaVote.newagendaservice.models.exception.InvalidAgendaIdException"/>
+    <fullyQualifiedTypeName name="java.util.UUID"/>
+    <fullyQualifiedTypeName name="exception.InvalidCpfException"/>
+    <fullyQualifiedTypeName name="exception.InvalidAgendaIdException"/>
+    <fullyQualifiedTypeName name="exception.VotationExpiredException"/>
+    <fullyQualifiedTypeName name="exception.VotationNotOpenException"/>
 </qualifiedTypeNameHistroy>

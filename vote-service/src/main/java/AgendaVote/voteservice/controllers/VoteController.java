@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,26 +22,28 @@ import exception.InvalidCpfException;
 public class VoteController {
 
 	@Autowired
-	AgendaRepository agendaRepo;
+	AgendaRepository agendaCollection_mongoDB;
 	
-	@PutMapping
+	@PostMapping
 	public boolean voteFor(@RequestParam(value = "agenda", required=true) UUID agendaId, 
-				@RequestParam(value="cpf", required=true) String cpf, 
-				@RequestParam(value="decision", required=true) String decision) throws Exception {
+				@RequestParam(value="cpf", required=true) String voteeCpf, 
+				@RequestParam(value="decision", required=true) String voteeDecision) {
 		
-		Optional<Agenda> agenda = agendaRepo.findById(agendaId);
+		voteeDecision = voteeDecision.toLowerCase();
 		
-		if(CPF.checkValid(cpf) == false) throw new InvalidCpfException(cpf);
+		Optional<Agenda> agendaQuery = agendaCollection_mongoDB.findById(agendaId);
 		
-		if(agenda.isEmpty()) {
+		if( CPF.checkValid(voteeCpf) == false) throw new InvalidCpfException(voteeCpf);
+		
+		if(agendaQuery.isEmpty()) {
 			throw new InvalidAgendaIdException(agendaId);
 		} else {
-			Agenda currentAgenda = agenda.get();
-			VoteDefault newVote = new VoteDefault(cpf, decision.toLowerCase());
+			Agenda foundAgenda = agendaQuery.get();
+			VoteDefault newVote = new VoteDefault(voteeCpf, voteeDecision);
 			
-			currentAgenda.vote(newVote);
+			foundAgenda.vote(newVote);
 			
-			agendaRepo.save(currentAgenda);
+			agendaCollection_mongoDB.save(foundAgenda);
 			
 			return true;
 		}

@@ -2,6 +2,10 @@ package interfaces;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * Interface containing all setters and getters
+ * Contract to build a Vote
+ */
 public interface VoteInterface {
 	
 	public UUID getId();

@@ -8,6 +8,10 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
+/**
+ * Deserializer class
+ *
+ */
 public class AgendaDeserializer extends StdDeserializer<Agenda>{
 
 	public AgendaDeserializer() {
@@ -22,9 +26,11 @@ public class AgendaDeserializer extends StdDeserializer<Agenda>{
 	@Override
 	public Agenda deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 
-		JsonNode root = p.getCodec().readTree(p);
-		
-		return new Agenda(root.get("name").asText(), root.get("description").asText());
+		JsonNode rootNode = p.getCodec().readTree(p);
+		String name = rootNode.get("name").asText();
+		String description = rootNode.get("description").asText();
+
+		return new Agenda(name, description);
 	}
 
 }

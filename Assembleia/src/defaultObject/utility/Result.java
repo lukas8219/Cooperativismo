@@ -2,13 +2,28 @@ package defaultObject.utility;
 
 import java.util.Date;
 
+import exception.VotationNotOpenException;
+import exception.VotationOccurringException;
 import interfaces.AgendaInterface;
 import interfaces.ResultInterface;
 
+/**
+ * 
+ */
 public class Result implements ResultInterface{
 
 	private AgendaInterface agenda;
-	private String result; // Approved ! Refused
+	private String result;
+	
+	
+	/**
+	 * Construct a Result Object containing fields Agenda and Result
+	 * @param agenda - a Agenda Interface/implemented Object
+	 * @param result - YES or NO String - non-case-sensitive
+	 */
+	
+	public Result() {
+	}
 	
 	public Result(AgendaInterface agenda, String result) {
 		this.result = result;
@@ -28,15 +43,20 @@ public class Result implements ResultInterface{
 		this.result = result;
 	}
 	
-	public static ResultInterface getResult(AgendaInterface agenda) throws Exception {
+	/**
+	 * Calculates the result and check if it is valid to return a result.
+	 * @param votedAgenda - Agenda Interface containing a votation.
+	 * @return a ResultInterface
+	 * @throws Exception for Agenda ID, and Votation Occurring
+	 */
+	public static ResultInterface getResult(AgendaInterface votedAgenda) throws Exception {
 		
-		if(agenda.getVotationExpirationDate() == null) throw new Exception("Votation not Open!");
-		if(agenda.getVotationExpirationDate().after(new Date())) throw new Exception("Votation Expired!");
+		if(votedAgenda.getVotationExpirationDate() == null) throw new VotationNotOpenException(votedAgenda.getId());
+		if(votedAgenda.getVotationExpirationDate().after(new Date())) throw new VotationOccurringException(votedAgenda.getId());		
+		int favor = votedAgenda.getFavor();
+		int against = votedAgenda.getAgainst();
 		
-		int favor = agenda.getFavor();
-		int against = agenda.getAgainst();
 		String result;
-		
 		
 		if(favor>against) {
 			result = "Approved";
@@ -46,7 +66,7 @@ public class Result implements ResultInterface{
 			result = "Tied";
 		}
 		
-		return new Result(agenda,result);
+		return new Result(votedAgenda,result);
 	}
 	
 }

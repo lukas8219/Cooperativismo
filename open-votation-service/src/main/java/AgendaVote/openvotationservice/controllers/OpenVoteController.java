@@ -7,34 +7,37 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import AgendaVote.openvotationservice.OpenVotationServiceApplication;
 import AgendaVote.openvotationservice.models.Agenda;
 import AgendaVote.openvotationservice.models.repository.AgendaRepo;
+import exception.InvalidAgendaIdException;
+import exception.OpenVoteException;
 
 @RestController
 @RequestMapping("/")
 public class OpenVoteController {
 
 	@Autowired
-	AgendaRepo agendaRepo;
+	AgendaRepo agendaCollection_mongoDB;
 	
 	@PutMapping()
-	public String openVote(@RequestParam(value = "id", required=true) UUID id,
-							@RequestParam(value="time", required=false) Integer minutes) {
+	public void openVote(@RequestParam(value = "id", required=true) UUID agendaId,
+							@RequestParam(value="time", required=false) Integer forMinutes) throws Exception {
 		
-		if(minutes == null) minutes = 1;
+		if(forMinutes == null) forMinutes = 1;
 		
-		Optional<Agenda> agenda = agendaRepo.findById(id);
+		Optional<Agenda> agendaQuery = agendaCollection_mongoDB.findById(agendaId);
 		
-		if(agenda.isEmpty()) {
-			return "No Agenda Found";
+		if(agendaQuery.isEmpty()) {
+			throw new InvalidAgendaIdException(agendaId);
 		} else {
-			Agenda currentAgenda = agenda.get();
-			if(currentAgenda.getVotationExpirationDate() == null) {
-				currentAgenda.openVote(minutes);
-				agendaRepo.save(currentAgenda);
-				return "Vote Opened";
+			Agenda foundAgenda = agendaQuery.get();
+			if(foundAgenda.getVotationExpirationDate() == null) {
+				foundAgenda.openVote(forMinutes);
+				agendaCollection_mongoDB.save(foundAgenda);
 			} else {
-				return "Votation already opened!";
+				throw new OpenVoteException(foundAgenda.getId());
 			}
 		}
 	}

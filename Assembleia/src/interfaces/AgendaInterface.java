@@ -3,6 +3,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Interface containign all getters and setters and methods.
+ * Contract to build a Agenda
+ *
+ */
 public interface AgendaInterface {
 
 	public UUID getId();
