@@ -1,5 +1,3 @@
-# Desafio BackEnd - South System - Java Junior
-
 ## Tecnologias
 
 ### Framework = SpringBoot com SpringCloud, Eureka Server Netflix. - para trabalhar com Microserviços
@@ -21,6 +19,7 @@
 ### New Agenda Service 
 
 Este serviço tem conexão direta com o Banco de Dados para criação de novas pautas, e consultas de resultados.
+
 **Endpoints**
 * POST : /open/ : que recebe um objeto Agenda, ou um Json contendo os campos "name" e "description". O mesmo gera seu UUID automaticamente. Retorna o objeto gerado.
 * GET : / : retorna uma lista de todas pautas do banco de Dados. Utilizado para Debug.
@@ -74,13 +73,3 @@ O serviço Cliente contém 1 teste que chama outros 4 testes, na ordem cronológ
 * VotationOccuring : Testa consultar resultado em votação que está acontecendo.
 
 * Already Open : Teste se consegue abrir a pauta, mesmo que ela já tenha sido aberta.
-
-### Documentação Interna
-
-Alguns microserviços contém JavaDoc.
-
-### Tarefas Bônus utilizadas:
-
-Selecionei apenas a Tarefa Bônus 1 de Integração com Sistemas Externos. O Código está na classe em VoteService/src/main/java/AgendaVote/voteservice/models/CPF.java
-
-# Obrigado South System 
